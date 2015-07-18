@@ -11,3 +11,4 @@ WebRoot/WEB-INF/classes/com/spark/utils/dataSource/Database_INFO.properties
 .classpath
 *.classpath
 .classpath
+src/com/spark/utils/dataSource/Database_INFO.properties
