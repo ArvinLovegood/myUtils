@@ -74,7 +74,7 @@ public class DataSource {
 		System.out.println("连接数据库："+dbFlag+":"+f);
 	}
 
-	private DataSource(DruidPlugin dp,ActiveRecordPlugin arp) {
+	public DataSource(DruidPlugin dp,ActiveRecordPlugin arp) {
 		this.dp=dp;
 		this.arp=arp;
 	}
@@ -96,7 +96,16 @@ public class DataSource {
 	}
 	
 	public boolean start(){
-		return this.dp.start()&&this.arp.start();		
+		try {
+			return this.dp.start()&&this.arp.start();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			if(e.getMessage().contains("Config already exists")){				
+				return true;
+			}else{
+				return this.dp.start()&&this.arp.start();
+			}
+		}		
 	}
 	
 	public boolean stop(){

@@ -39,16 +39,20 @@ public class DbMangerServlet extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest Request, HttpServletResponse Response)
 			throws ServletException, IOException {
-		System.out.println("============DbMangerServlet===service===================");
 		String action=Request.getParameter("action");
-		System.out.println("action:"+action);
-		if(app!=null){
-			//Response.setContentType("text/json;charset=utf-8");
-			//Response.getWriter().write(JSONObject.toJSONString(app.getDataBaseInformations()));		
-			Request.setAttribute("DBinfo", app.getDataBaseInformations());
-			Request.setAttribute("TableList", app.getAllTableList(null));
+		System.out.println("============DbMangerServlet===service===================action:"+action);
+
+		if("newDbConn".equals(action)){
+			new DatabaseConnection(Request,Response);
 		}
+		
 		if("view".equals(action)){
+			if(app!=null){
+				Response.setContentType("text/json;charset=utf-8");
+				Response.getWriter().write(JSONObject.toJSONString(app.getDataBaseInformations()));		
+				Request.setAttribute("DBinfo", app.getDataBaseInformations());
+				Request.setAttribute("TableList", app.getAllTableList(null));
+			}
 			Request.getRequestDispatcher(action+".jsp").forward(Request, Response);
 		}
 		

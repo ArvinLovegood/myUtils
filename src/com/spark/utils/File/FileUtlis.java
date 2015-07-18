@@ -30,7 +30,6 @@ public class FileUtlis {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		String[] file={"F:/workspace/sparkUtils/src/com/spark/utils/File/FileUtlis.java",
-				"I:/java.txt",
 				"F:/建筑大学考勤系统/shenfz.txt",
 				"F:/建筑大学考勤系统/141029172018.psc",
 				"f:/A/VerifyCodeUtil.java",
