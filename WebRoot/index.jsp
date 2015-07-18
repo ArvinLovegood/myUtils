@@ -11,7 +11,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>My JSP 'index.jsp' starting page</title>
+<title>基于web的数据库客户端</title>
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
@@ -100,13 +100,18 @@
 	</div>
 	<div data-options="region:'center',iconCls:'icon-ok'">
 		<div class="easyui-accordion" data-options="fit:true">
-			<div title="About" data-options="iconCls:'icon-ok'"
+			<div title="欢迎" data-options="iconCls:'icon-ok'"
 				style="overflow:auto;padding:10px;">
-				<h3 style="color:#0099FF;">Accordion for jQuery</h3>
-				<p>Accordion is a part of easyui framework for jQuery. It lets
-					you define your accordion component on web page more easily.</p>
+				<h3 style="color:#0099FF;">一起组队打怪兽！</h3>
+				<p>github项目地址：<a title="前方有大Boss！！" href="https://github.com/ArvinLovegood/myUtils">https://github.com/ArvinLovegood/myUtils</a></p>
+				<h3 style="color:#0099FF;">项目简介:</h3>
+				<p>本项目的目标：提供一个企业项目后期维护的工具集，主要包括远程文件更新，远程数据库操作（暂时就这些吧）</p>
+				<h3 style="color:#0099FF;">1.远程数据库操作</h3>
+				<p>目前正在开发远程数据库操作工具集，系统大致雏形已设计完毕，加紧开发各个模块中ing...</p>
+				<h3 style="color:#0099FF;">2.远程文件更新</h3>
+				<p>设计ing...</p>
 			</div>
-			<div title="Help" data-options="iconCls:'icon-help'"
+			<div title="开发中" data-options="iconCls:'icon-help'"
 				style="padding:10px;">
 				<p>The accordion allows you to provide multiple panels and
 					display one or more at a time. Each panel has built-in support for
@@ -116,7 +121,7 @@
 					selected. If it is not specified, then the first panel is taken by
 					default.</p>
 			</div>
-			<div title="Ajax" data-options="href:'http://localhost:6666/sparkUtlis/DbManger?action=view'"
+			<div title="测试" data-options="href:'http://localhost:6666/sparkUtlis/DbManger?action=view'"
 				style="padding:10px"></div>
 		</div>
 	</div>
