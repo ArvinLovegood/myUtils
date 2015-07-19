@@ -80,7 +80,29 @@
 					            
 					        ]],
 					        onLoadSuccess:function(data){
-						        $("#aa").accordion('select',"开发中");
+					         console.log(JSON.stringify(data))
+						        $("#aa").accordion('select',"数据列表");
+						        var columns=new Array();
+						        $.each(data.rows,function(i,o){
+						        	var column=new Object();
+						        	column.field=o.columnName;
+						        	column.title=o.columnName;	
+						        	column.width=200;	
+						        	columns.push(column);				        	
+						        })
+						        
+						        console.log(JSON.stringify(columns))
+						        
+						        $("#tableData").datagrid({
+							        fit:true,
+			        				fitColumns:true,
+			        				pageSize:20,
+							        url:'<%=path %>/DbManger',
+							        queryParams:{action:'tableData',TName:node.text},
+							        columns:[columns],
+							        rownumbers:true,
+							        pagination:true
+						        })
 					        }
 					    });
 				}
@@ -88,6 +110,17 @@
 	        
 	    }
 	});
+	}
+	
+	function disConn(){
+		$.post("<%=path %>/DbManger",{action:"disConn"},function(data){
+			$.messager.show({
+				title:'提醒',
+				msg:data,
+				timeout:5000,
+				showType:'slide'
+			});
+		})
 	}
 	</script>
 </head>
@@ -131,12 +164,13 @@
 				<h3 style="color:#0099FF;">2.远程文件更新</h3>
 				<p>设计ing...</p>
 			</div>
-			<div id="tableINFO" title="开发中" data-options="iconCls:'icon-help'"
+			<div title="数据列表" data-options="" style="padding:10px">
+			<table id="tableData" ></table>
+			</div>
+			<div id="tableINFO" title="列基本信息" data-options="iconCls:'icon-help'"
 				style="padding:10px;">
 				<table id="tableColumns"></table>
 			</div>
-			<div title="测试" data-options="href:'http://localhost:6666/sparkUtlis/DbManger?action=view'"
-				style="padding:10px"></div>
 		</div>
 	</div>
 </body>

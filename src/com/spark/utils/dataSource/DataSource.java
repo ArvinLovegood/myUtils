@@ -33,7 +33,7 @@ public class DataSource {
 		DataSource Oracle = new DataSource("Oracle");
 		DataSource SQLServer = new DataSource("SQLServer");
 		
-		DatabaseMetaData dbMetaData = MySQL.getDs().getDp().getDataSource().getConnection().getMetaData();
+/*		DatabaseMetaData dbMetaData = MySQL.getDs().getDp().getDataSource().getConnection().getMetaData();
 		
 		//MetaData.getTables(catalog, schemaPattern, tableNamePattern, types);
 		String[] types = { "TABLE" };  
@@ -44,7 +44,7 @@ public class DataSource {
             String tableType = rs.getString("TABLE_TYPE");  //表类型  
             String remarks = rs.getString("REMARKS");       //表备注  
             System.out.println(tableName + "-" + tableType + "-" + remarks);  
-        }
+        }*/
 		
 		/*for(int i=1;i<10;i++){
 			List<Record> d = Db.use("MySQL").find("select * from hzx_attence_user");

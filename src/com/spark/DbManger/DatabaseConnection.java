@@ -54,6 +54,7 @@ public class DatabaseConnection {
 			try {
 				conn = db.getDp().getDataSource().getConnection();
 				request.getSession().setAttribute(dbFlag, conn);
+				request.getSession().setAttribute("arp", arp);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

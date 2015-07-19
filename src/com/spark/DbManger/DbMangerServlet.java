@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.spark.utils.dataSource.DataSource;
 import com.spark.utils.dataSource.DatabaseMetaDateApplication;
 
@@ -26,14 +27,14 @@ public class DbMangerServlet extends HttpServlet{
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-		DataSource MySQL = new DataSource("MySQL");
+		/*DataSource MySQL = new DataSource("MySQL");
 		try {
 			 conn = MySQL.getDs().getDp().getDataSource().getConnection();
 			 app=new DatabaseMetaDateApplication(conn);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	@Override
@@ -46,11 +47,23 @@ public class DbMangerServlet extends HttpServlet{
 			new DatabaseConnection(Request,Response);
 		}
 		
+		if("disConn".equals(action)){			
+			ActiveRecordPlugin arp=(ActiveRecordPlugin) Request.getSession().getAttribute("arp");
+			arp.stop();
+			Response.setCharacterEncoding("UTF-8");
+			Response.setContentType("text/plain;charset=utf-8");
+			Response.getWriter().println("已关闭会话！");
+			Request.getSession().invalidate();			
+		}
+		
 		if("tableInfo".equals(action)){
 			new TableInfo(Request,Response);
 		}
+		if("tableData".equals(action)){
+			new tableData(Request,Response);
+		}
 		
-		if("view".equals(action)){
+/*		if("view".equals(action)){
 			if(app!=null){
 				Response.setContentType("text/json;charset=utf-8");
 				Response.getWriter().write(JSONObject.toJSONString(app.getDataBaseInformations()));		
@@ -58,7 +71,7 @@ public class DbMangerServlet extends HttpServlet{
 				Request.setAttribute("TableList", app.getAllTableList(null));
 			}
 			Request.getRequestDispatcher(action+".jsp").forward(Request, Response);
-		}
+		}*/
 		
 		
 	}
