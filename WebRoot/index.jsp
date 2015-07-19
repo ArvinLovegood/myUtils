@@ -65,7 +65,6 @@
 	        	lines:true,
 	        	data: tree,
 	        	onClick: function(node){
-	        	
 	        	$('#tableColumns').datagrid({
 	        				fit:true,
 	        				fitColumns:true,
