@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -139,9 +141,11 @@ public class DatabaseMetaDateApplication {
 
 	/**
 	 * 获得表或视图中的所有列信息
+	 * @return 
 	 */
-	public void getTableColumns(String schemaName, String tableName) {
+	public List getTableColumns(String schemaName, String tableName) {
 		 
+		List tableColumns=new ArrayList();
 		try{   
 	            
 			ResultSet rs = dbMetaData.getColumns(null, schemaName, tableName, "%");	           
@@ -162,6 +166,17 @@ public class DatabaseMetaDateApplication {
 	                int sqlDatetimeSub = rs.getInt("SQL_DATETIME_SUB");   //SQL日期时间分?
 	                int charOctetLength = rs.getInt("CHAR_OCTET_LENGTH");   //char类型的列中的最大字节数
 	                int ordinalPosition = rs.getInt("ORDINAL_POSITION");  //表中列的索引（从1开始）
+	                
+	                Map column=new LinkedHashMap();
+	                column.put("tableName_", tableName_);
+	                column.put("columnName", columnName);
+	                column.put("dataTypeName", dataTypeName);
+	                column.put("columnSize", columnSize);
+	                column.put("decimalDigits", decimalDigits);
+	                column.put("remarks", remarks);
+	                
+	                tableColumns.add(column);
+	               
 	                
 	                /**
 	                 * ISO规则用来确定某一列的为空性。
@@ -188,6 +203,7 @@ public class DatabaseMetaDateApplication {
 	        } catch (SQLException e){
 	            e.printStackTrace();   
 	        }
+		return tableColumns;
 	}
 
 

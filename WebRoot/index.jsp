@@ -63,7 +63,28 @@
 	        $('#tt').tree({
 	        	animate:true,
 	        	lines:true,
-	        	data: tree
+	        	data: tree,
+	        	onClick: function(node){
+	        	
+	        	$('#tableColumns').datagrid({
+	        				fit:true,
+	        				fitColumns:true,
+					        url:'<%=path %>/DbManger',
+					        queryParams:{action:'tableInfo',TName:node.text},
+					        columns:[[
+					            {field:'tableName_',title:'所属表名',width:200},
+					            {field:'columnName',title:'列名',width:200},
+					            {field:'dataTypeName',title:'数据类型',width:200},
+					            {field:'columnSize',title:'长度',width:200},
+					            {field:'decimalDigits',title:'小数位数',width:200},
+					            {field:'remarks',title:'列描述',width:200}
+					            
+					        ]],
+					        onLoadSuccess:function(data){
+						        $("#aa").accordion('select',"开发中");
+					        }
+					    });
+				}
 	        });
 	        
 	    }
@@ -99,7 +120,7 @@
 	<ul id="tt"></ul>
 	</div>
 	<div data-options="region:'center',iconCls:'icon-ok'">
-		<div class="easyui-accordion" data-options="fit:true">
+		<div id="aa" class="easyui-accordion" data-options="fit:true">
 			<div title="欢迎" data-options="iconCls:'icon-ok'"
 				style="overflow:auto;padding:10px;">
 				<h3 style="color:#0099FF;">一起组队打怪兽！</h3>
@@ -111,15 +132,9 @@
 				<h3 style="color:#0099FF;">2.远程文件更新</h3>
 				<p>设计ing...</p>
 			</div>
-			<div title="开发中" data-options="iconCls:'icon-help'"
+			<div id="tableINFO" title="开发中" data-options="iconCls:'icon-help'"
 				style="padding:10px;">
-				<p>The accordion allows you to provide multiple panels and
-					display one or more at a time. Each panel has built-in support for
-					expanding and collapsing. Clicking on a panel header to expand or
-					collapse that panel body. The panel content can be loaded via ajax
-					by specifying a 'href' property. Users can define a panel to be
-					selected. If it is not specified, then the first panel is taken by
-					default.</p>
+				<table id="tableColumns"></table>
 			</div>
 			<div title="测试" data-options="href:'http://localhost:6666/sparkUtlis/DbManger?action=view'"
 				style="padding:10px"></div>

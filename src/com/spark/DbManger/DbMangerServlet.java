@@ -46,6 +46,10 @@ public class DbMangerServlet extends HttpServlet{
 			new DatabaseConnection(Request,Response);
 		}
 		
+		if("tableInfo".equals(action)){
+			new TableInfo(Request,Response);
+		}
+		
 		if("view".equals(action)){
 			if(app!=null){
 				Response.setContentType("text/json;charset=utf-8");

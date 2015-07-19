@@ -53,6 +53,7 @@ public class DatabaseConnection {
 			Connection conn = null;
 			try {
 				conn = db.getDp().getDataSource().getConnection();
+				request.getSession().setAttribute(dbFlag, conn);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
