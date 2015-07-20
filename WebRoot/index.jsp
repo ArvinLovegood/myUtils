@@ -67,7 +67,7 @@
 	        	onClick: function(node){
 	        	$('#tableColumns').datagrid({
 	        				fit:true,
-	        				fitColumns:true,
+	        				striped:true,
 					        url:'<%=path %>/DbManger',
 					        queryParams:{action:'tableInfo',TName:node.text},
 					        columns:[[
@@ -95,7 +95,7 @@
 						        
 						        $("#tableData").datagrid({
 							        fit:true,
-			        				fitColumns:true,
+							        striped:true,
 			        				pageSize:20,
 							        url:'<%=path %>/DbManger',
 							        queryParams:{action:'tableData',TName:node.text},
@@ -138,7 +138,7 @@
 			var OBJ=JSON.parse(data);
 			$("#queryData").datagrid({
 				fit:true,
-				fitColumns:true,
+				striped:true,
 		        url:'<%=path %>/DbManger',
 		        queryParams:{action:"query",SQL:sql,f:"datagrid"},
 		        columns:[OBJ.columns],
