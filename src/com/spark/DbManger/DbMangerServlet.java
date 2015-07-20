@@ -62,7 +62,9 @@ public class DbMangerServlet extends HttpServlet{
 		if("tableData".equals(action)){
 			new tableData(Request,Response);
 		}
-		
+		if("query".equals(action)){
+			new QueryAnyData(Request,Response);
+		}
 /*		if("view".equals(action)){
 			if(app!=null){
 				Response.setContentType("text/json;charset=utf-8");

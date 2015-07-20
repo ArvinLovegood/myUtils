@@ -80,7 +80,7 @@
 					            
 					        ]],
 					        onLoadSuccess:function(data){
-					         console.log(JSON.stringify(data))
+					        // console.log(JSON.stringify(data))
 						        $("#aa").accordion('select',"数据列表");
 						        var columns=new Array();
 						        $.each(data.rows,function(i,o){
@@ -91,7 +91,7 @@
 						        	columns.push(column);				        	
 						        })
 						        
-						        console.log(JSON.stringify(columns))
+						     //   console.log(JSON.stringify(columns))
 						        
 						        $("#tableData").datagrid({
 							        fit:true,
@@ -119,6 +119,32 @@
 				msg:data,
 				timeout:5000,
 				showType:'slide'
+			});
+		})
+	}
+	var i=1;
+	function addTab(){
+		$('#tabs').tabs('add',{
+			id:Math.random(),
+		    title:'新建查询'+i++,
+		    href:'<%=path%>/query.jsp',
+		    closable:true
+		});
+	}
+	
+	function querySQL(){
+		var sql=$("#querySQL").textbox("getValue");
+		$.post("<%=path%>/DbManger",{action:"query",SQL:sql,page:1,rows:10},function(data){
+			var OBJ=JSON.parse(data);
+			$("#queryData").datagrid({
+				fit:true,
+				fitColumns:true,
+		        url:'<%=path %>/DbManger',
+		        queryParams:{action:"query",SQL:sql,f:"datagrid"},
+		        columns:[OBJ.columns],
+		        //data:OBJ.data,
+		        rownumbers:true,
+		        pagination:true
 			});
 		})
 	}
@@ -153,16 +179,24 @@
 	</div>
 	<div data-options="region:'center',iconCls:'icon-ok'">
 		<div id="aa" class="easyui-accordion" data-options="fit:true">
-			<div title="欢迎" data-options="iconCls:'icon-ok'"
-				style="overflow:auto;padding:10px;">
-				<h3 style="color:#0099FF;">一起组队打怪兽！</h3>
-				<p>github项目地址：<a title="前方有大Boss！！" href="https://github.com/ArvinLovegood/myUtils">https://github.com/ArvinLovegood/myUtils</a></p>
-				<h3 style="color:#0099FF;">项目简介:</h3>
-				<p>本项目的目标：提供一个企业项目后期维护的工具集，主要包括远程文件更新，远程数据库操作（暂时就这些吧）</p>
-				<h3 style="color:#0099FF;">1.远程数据库操作</h3>
-				<p>目前正在开发远程数据库操作工具集，系统大致雏形已设计完毕，加紧开发各个模块中ing...</p>
-				<h3 style="color:#0099FF;">2.远程文件更新</h3>
-				<p>设计ing...</p>
+			<div title="查询" data-options="iconCls:'icon-ok'"
+				style="overflow:auto;">
+				<div id="tab-tools">
+					 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="querySQL()" style="width:80px">执行SQL</a>
+					<a href="javascript:void(0)" class="easyui-linkbutton" plain="false" iconCls="icon-add" onclick="addTab()">新建查询</a>
+				</div>			
+				<div id="tabs" class="easyui-tabs" data-options="fit:true,tools:'#tab-tools'">
+					<div title="欢迎" style="padding:10px">
+						<h3 style="color:#0099FF;">一起组队打怪兽！</h3>
+						<p>github项目地址：<a title="前方有大Boss！！" href="https://github.com/ArvinLovegood/myUtils">https://github.com/ArvinLovegood/myUtils</a></p>
+						<h3 style="color:#0099FF;">项目简介:</h3>
+						<p>本项目的目标：提供一个企业项目后期维护的工具集，主要包括远程文件更新，远程数据库操作（暂时就这些吧）</p>
+						<h3 style="color:#0099FF;">1.远程数据库操作</h3>
+						<p>目前正在开发远程数据库操作工具集，系统大致雏形已设计完毕，加紧开发各个模块中ing...</p>
+						<h3 style="color:#0099FF;">2.远程文件更新</h3>
+						<p>设计ing...</p>
+					</div>
+		 		</div>
 			</div>
 			<div title="数据列表" data-options="" style="padding:10px">
 			<table id="tableData" ></table>

@@ -193,12 +193,12 @@ public class DatabaseMetaDateApplication {
 	                 * 空字串---如果不能确定它是否
 	                 * 列是自动递增的参数是未知
 	                 */
-	                String isAutoincrement = rs.getString("IS_AUTOINCREMENT");   
+	               // String isAutoincrement = rs.getString("IS_AUTOINCREMENT");   
 	                
 	                System.out.println(tableCat + "-" + tableSchemaName + "-" + tableName_ + "-" + columnName + "-"  
 	                        + dataType + "-" + dataTypeName + "-" + columnSize + "-" + decimalDigits + "-" + numPrecRadix   
 	                        + "-" + nullAble + "-" + remarks + "-" + columnDef + "-" + sqlDataType + "-" + sqlDatetimeSub   
-	                        + charOctetLength + "-" + ordinalPosition + "-" + isNullAble + "-" + isAutoincrement + "-");   
+	                        + charOctetLength + "-" + ordinalPosition + "-" + isNullAble + "-" );   
 	            }   
 	        } catch (SQLException e){
 	            e.printStackTrace();   
