@@ -6,8 +6,8 @@
 *.name
 .settings/org.eclipse.wst.jsdt.ui.superType.container
 *.class
-WebRoot/WEB-INF/classes/com/spark/utils/dataSource/Database_INFO.properties
-*.tern-project
+WebRoot/WEB-INF/classes/*
+WebRoot/WEB-INF/classes/com/spark/utils/dataSource/Database_INFO.properties*.tern-project
 .classpath
 *.classpath
 .classpath
