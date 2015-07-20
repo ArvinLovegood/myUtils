@@ -134,18 +134,27 @@
 	
 	function querySQL(){
 		var sql=$("#querySQL").textbox("getValue");
-		$.post("<%=path%>/DbManger",{action:"query",SQL:sql,page:1,rows:10},function(data){
+		$.post("<%=path%>/DbManger",{action:"query",f:"columns",SQL:sql,page:1,rows:10},function(data){
 			var OBJ=JSON.parse(data);
-			$("#queryData").datagrid({
-				fit:true,
-				striped:true,
-		        url:'<%=path %>/DbManger',
-		        queryParams:{action:"query",SQL:sql,f:"datagrid"},
-		        columns:[OBJ.columns],
-		        //data:OBJ.data,
-		        rownumbers:true,
-		        pagination:true
-			});
+			if(OBJ.msg!=undefined){
+				$.messager.show({
+					title:'提醒',
+					msg:OBJ.msg,
+					timeout:5000,
+					showType:'slide'
+				});
+			}else{				
+				$("#queryData").datagrid({
+					fit:true,
+					striped:true,
+			        url:'<%=path %>/DbManger',
+			        queryParams:{action:"query",SQL:sql,f:"datagrid"},
+			        columns:[OBJ.columns],
+			        //data:OBJ.data,
+			        rownumbers:true,
+			        pagination:true
+				});
+			}
 		})
 	}
 	</script>

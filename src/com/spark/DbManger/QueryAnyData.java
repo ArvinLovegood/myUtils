@@ -25,60 +25,78 @@ import com.jfinal.plugin.activerecord.Record;
 
 /**
  * @author Spark
- *
+ * 
  */
 public class QueryAnyData {
 
 	public QueryAnyData(HttpServletRequest request, HttpServletResponse response) {
-		
-		String SQL=request.getParameter("SQL").toUpperCase();
-		String pageNumber=request.getParameter("page");
-		String pageSize=request.getParameter("rows");
-		
+
+		String SQL = request.getParameter("SQL").toUpperCase().replace(";", "")
+				.trim();
+		String pageNumber = request.getParameter("page");
+		String pageSize = request.getParameter("rows");
+
 		DbPro dao = Db.use(request.getSession().getId());
-		//int indexOFfrom=SQL.indexOf("FROM");
-		String select="select *  ";
-		String from="	from ("+SQL+") WHERE 1=1 ";
-		Page<Record> page = dao.paginate(Integer.parseInt(pageNumber), Integer.parseInt(pageSize), select, from);
-		int total=page.getTotalRow();
-		Iterator<Record> it = page.getList().iterator();
-		 List reData=new ArrayList();
-		 String[] Columns=null;
-		while(it.hasNext()){
-			Record re = it.next();
-			Columns = re.getColumnNames();
-			reData.add(re.getColumns());
-		}
-		
-		//data
-		 Map rePage=new HashMap();
-		 rePage.put("total", total);
-		 rePage.put("rows", reData);
-		 
-		 Map returnPage=new  HashMap();
-		 List ColumnsList=new ArrayList();
-		 for(String s:Columns){
-			 Map column=new  HashMap();
-			 column.put("field", s);
-			 column.put("title", s);
-			 column.put("width", 100);
-			 ColumnsList.add(column);
-		 }
-		 returnPage.put("columns", ColumnsList);
-		 returnPage.put("data", rePage);
-		 
-		 
-		 try {
-			 response.setCharacterEncoding("UTF-8");
-			 response.setContentType("text/plain;charset=utf-8");
-			 if("datagrid".equals(request.getParameter("f"))){
-				 response.getWriter().write(JSONObject.toJSONString(rePage));
-			 }else{				 
-				 response.getWriter().write(JSONObject.toJSONString(returnPage));
-			 }
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (SQL.startsWith("DELETE") || SQL.startsWith("INSERT")
+				|| SQL.startsWith("UPDATE")) {
+			int effect = dao.update(SQL);
+			
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/json;charset=utf-8");
+			Map msg=new HashMap();
+			msg.put("msg", "影响行数："+effect);
+			try {
+				response.getWriter().write(JSONObject.toJSONString(msg));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+
+			String select = "select *  ";
+			String from = "	from (" + SQL + ") WHERE 1=1 ";
+			Page<Record> page = dao.paginate(Integer.parseInt(pageNumber),
+					Integer.parseInt(pageSize), select, from);
+			int total = page.getTotalRow();
+			Iterator<Record> it = page.getList().iterator();
+			List reData = new ArrayList();
+			String[] Columns = null;
+			while (it.hasNext()) {
+				Record re = it.next();
+				Columns = re.getColumnNames();
+				reData.add(re.getColumns());
+			}
+
+			// data
+			Map rePage = new HashMap();
+			rePage.put("total", total);
+			rePage.put("rows", reData);
+
+			Map returnPage = new HashMap();
+			List ColumnsList = new ArrayList();
+			for (String s : Columns) {
+				Map column = new HashMap();
+				column.put("field", s);
+				column.put("title", s);
+				column.put("width", 100);
+				ColumnsList.add(column);
+			}
+			returnPage.put("columns", ColumnsList);
+			returnPage.put("data", rePage);
+
+			try {
+				response.setCharacterEncoding("UTF-8");
+				response.setContentType("text/plain;charset=utf-8");
+				if ("datagrid".equals(request.getParameter("f"))) {
+					response.getWriter().write(JSONObject.toJSONString(rePage));
+				} else if ("columns".equals(request.getParameter("f"))) {
+					response.getWriter().write(
+							JSONObject.toJSONString(returnPage));
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
